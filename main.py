@@ -3,6 +3,8 @@ import psycopg2
 import numpy as np
 from langchain_huggingface import HuggingFaceEmbeddings
 from pgvector.psycopg2 import register_vector
+from dotenv import load_dotenv
+load_dotenv()
 
 texts = [
     "Type: Apartment, City: Beirut, Bedrooms: 2, Bathrooms: 1, Size: 90sqm",
@@ -25,7 +27,7 @@ embeddings_list = embeddings.embed_documents(texts)
 
 # print(embeddings_list[0])
 
-connections = psycopg2.connect(dbname="ragdb", user="postgres", password = "Asalloum1234", host="localhost", port="5432")
+connections = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password = DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 register_vector(connections)
 cursor = connections.cursor()
 
