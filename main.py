@@ -43,7 +43,7 @@ connections.close()
 new_text = "Type: Apartment, City: Zahle, Bedrooms: 2, Bathrooms: 2, Size: 100sqm" 
 new_embedding = embeddings.embed_query(new_text)
 
-new_connections = psycopg2.connect(dbname="ragdb", user="postgres", password = "Asalloum1234", host="localhost", port="5432")
+new_connections = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password = DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 register_vector(new_connections)
 new_cursor = new_connections.cursor()
 
@@ -65,7 +65,7 @@ new_cursor.execute(
 text_3 = "Type: Duplex, City: Beirut, Bedrooms: 5, Bathrooms: 2, Size: 250sqm"
 embedding_3 = embeddings.embed_query(text_3)
 
-connections_3 = psycopg2.connect(dbname="ragdb", user="postgres", password = "Asalloum1234", host="localhost", port="5432")
+connections_3 = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password = DB_PASSWORD, host=DB_HOST, port=DB_PORT)
 register_vector(connections_3)
 cursor_3 = connections_3.cursor()
 
