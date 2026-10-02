@@ -27,7 +27,7 @@ embeddings_list = embeddings.embed_documents(texts)
 
 # print(embeddings_list[0])
 
-connections = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password = DB_PASSWORD, host=DB_HOST, port=DB_PORT)
+connections = psycopg2.connect(dbname=os.getenv('DB_NAME'), user=os.getenv('DB_USER'), password=os.getenv('DB_PASSWORD'), host=os.getenv('DB_HOST'), port=int(os.getenv('DB_PORT')))
 register_vector(connections)
 cursor = connections.cursor()
 
@@ -42,10 +42,10 @@ cursor.close()
 connections.close()
 
 
-new_text = "Type: Apartment, City: Zahle, Bedrooms: 2, Bathrooms: 2, Size: 100sqm" 
+new_text = "Type: Apartment, City: Zahle, Bedrooms: 2, Bathrooms: 2, Size: 100sqm"
 new_embedding = embeddings.embed_query(new_text)
 
-new_connections = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password = DB_PASSWORD, host=DB_HOST, port=DB_PORT)
+new_connections = psycopg2.connect(dbname=os.getenv('DB_NAME'), user=os.getenv('DB_USER'), password=os.getenv('DB_PASSWORD'), host=os.getenv('DB_HOST'), port=int(os.getenv('DB_PORT')))
 register_vector(new_connections)
 new_cursor = new_connections.cursor()
 
@@ -56,7 +56,7 @@ new_cursor.execute(
     ORDER BY embedding <-> %s::vector
     LIMIT 5
     """,
-    (new_embedding,) 
+    (new_embedding,)
 )
 
 # results = new_cursor.fetchall()
@@ -67,12 +67,12 @@ new_cursor.execute(
 text_3 = "Type: Duplex, City: Beirut, Bedrooms: 5, Bathrooms: 2, Size: 250sqm"
 embedding_3 = embeddings.embed_query(text_3)
 
-connections_3 = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password = DB_PASSWORD, host=DB_HOST, port=DB_PORT)
+connections_3 = psycopg2.connect(dbname=os.getenv('DB_NAME'), user=os.getenv('DB_USER'), password=os.getenv('DB_PASSWORD'), host=os.getenv('DB_HOST'), port=int(os.getenv('DB_PORT')))
 register_vector(connections_3)
 cursor_3 = connections_3.cursor()
 
 cursor_3.execute(
-""" 
+"""
 SELECT id, content
 FROM items
 ORDER BY embedding <-> %s::vector
